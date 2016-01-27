@@ -40,7 +40,6 @@ function getChampion($id) {
 	}
 }
 function addChampion() {
-	error_log('addChampion\n', 3, '/var/tmp/php.log');
 	$request = Slim::getInstance()->request();
 	$champion = json_decode($request->getBody());
 	$sql = "INSERT INTO champions (name) VALUES (:name)";
@@ -53,7 +52,6 @@ function addChampion() {
 		$db = null;
 		echo json_encode($champion);
 	} catch(PDOException $e) {
-		error_log($e->getMessage(), 3, '/var/tmp/php.log');
 		echo '{"error":{"text":' . $e->getMessage() . '}}';
 	}
 }
@@ -61,7 +59,7 @@ function updateChampion($id) {
 	$request = Slim::getInstance()->request();
 	$body = $request->getBody();
 	$champion = json_decode($body);
-	$sql = "UPDATE champions SET name=:name WHERE id=:id";
+	$sql = "UPDATE champions SET 'name'=:name WHERE id=:id";
 	try {
 		$db = getConnection();
 		$stmt = $db->prepare($sql);
