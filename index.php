@@ -1,10 +1,13 @@
 <?php
+require 'vendor/autoload.php';
 
-require 'Slim/Slim.php';
+$app = new \Slim\App();
 
-$app = new Slim();
 
-require 'Routes/*.php';
+$app->group('/api', function() use ($app) {
+	require 'Routes/champions.php';
+	require 'Routes/teams.php';
+});
 
 $app->run();
 
