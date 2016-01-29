@@ -5,8 +5,12 @@ $app = new \Slim\App();
 
 
 $app->group('/api', function() use ($app) {
-	require 'Routes/champions.php';
-	require 'Routes/teams.php';
+	require 'routes/champions.php';
+	require 'routes/teams.php';
+	require 'routes/compos.php';
+	require 'routes/regions.php';
+	require 'routes/bans.php';
+	require 'routes/games.php';
 });
 
 $app->run();
