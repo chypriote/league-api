@@ -15,21 +15,6 @@ $app->group('/games', function () {
 		}
 	})->setName('games');
 
-	function getGame($id) {
-		$sql = "select * FROM games WHERE id=:id";
-		try {
-			$db getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$game = $stmt->fetchObject();
-		} catch(PDOException $e) {
-			$this->logger->info("getGame error: " . $e->getMessage());
-			return $res->withStatus(400)->write('{"error":"server error"}');
-		}
-
-		return $game;
-	}
 
 	//get ban with id
 	$this->get('/{id}', function($req, $res, $args){

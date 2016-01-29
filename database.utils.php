@@ -1,4 +1,11 @@
 <?php
+	function getConnection() {
+		global $server, $database, $user, $password;
+
+		$dbh = new PDO("mysql:host=$server;dbname=$database", $user, $password);
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $dbh;
+	}
 
 	function getGame($id) {
 		$sql = "select * FROM games WHERE id=:id";
@@ -8,10 +15,11 @@
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$game = $stmt->fetchObject();
+			$game->region = getRegion($team->region)->name;
+			return $game;
 		} catch(PDOException $e) {
 			return null;
 		}
-		return $game;
 	}
 
 	function getCompo($id) {
@@ -51,20 +59,6 @@
 			$stmt->execute();
 			$champion = $stmt->fetchObject();
 			return $champion;
-		} catch(PDOException $e) {
-			return null;
-		}
-	}
-
-	function getTeam($id) {
-		$sql = "select * FROM teams WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$team = $stmt->fetchObject();
-			return $team;
 		} catch(PDOException $e) {
 			return null;
 		}

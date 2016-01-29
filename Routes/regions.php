@@ -1,5 +1,7 @@
 <?php
 
+require 'utils/regions.php';
+
 $app->group('/regions', function () {
 	//get regions list
 	$this->get('', function($req, $res, $args) {

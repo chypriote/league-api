@@ -3,6 +3,7 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\App();
 
+require 'config.php';
 require 'database.utils.php';
 
 $app->group('/api', function() use ($app) {
@@ -15,13 +16,3 @@ $app->group('/api', function() use ($app) {
 });
 
 $app->run();
-
-function getConnection() {
-	global $server, $database, $user, $password;
-
-	$dbh = new PDO("mysql:host=$server;dbname=$database", $user, $password);
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $dbh;
-}
-
-?>

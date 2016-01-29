@@ -1,35 +1,23 @@
 <?php
+require 'utils/teams.php';
 
 $app->group('/teams', function () {
 	//get teams list
 	$this->get('', function($req, $res, $args) {
-		$sql = "select * FROM teams";
-		try {
-			$db = getConnection();
-			$stmt = $db->query($sql);
-			$teams = $stmt->fetchAll(PDO::FETCH_OBJ);
-			$db = null;
+			$teams =getAllTeams();
+		if ($teams)
 			return $res->withStatus(200)->write(json_encode($teams));
-		} catch(PDOException $e) {
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	})->setName('teams');
 
 	//get team with id
 	$this->get('/{id}', function($req, $res, $args){
-		$id = $args['id'];
-		$sql = "SELECT * FROM teams WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$team = $stmt->fetchObject();
-			$db = null;
+		$team = getTeam($args['id']);
+		if ($team)
 			return $res->withStatus(200)->write(json_encode($team));
-		} catch(PDOException $e) {
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	});
 
 	//post new team
