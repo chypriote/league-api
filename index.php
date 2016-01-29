@@ -3,6 +3,7 @@ require 'vendor/autoload.php';
 
 $app = new \Slim\App();
 
+require 'database.utils.php';
 
 $app->group('/api', function() use ($app) {
 	require 'routes/champions.php';
@@ -16,11 +17,9 @@ $app->group('/api', function() use ($app) {
 $app->run();
 
 function getConnection() {
-	$dbhost="localhost";
-	$dbuser="root";
-	$dbpass="";
-	$dbname="league";
-	$dbh = new PDO("mysql:host=$dbhost;dbname=$dbname", $dbuser, $dbpass);
+	global $server, $database, $user, $password;
+
+	$dbh = new PDO("mysql:host=$server;dbname=$database", $user, $password);
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	return $dbh;
 }
