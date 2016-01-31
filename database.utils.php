@@ -7,21 +7,6 @@
 		return $dbh;
 	}
 
-	function getGame($id) {
-		$sql = "select * FROM games WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$game = $stmt->fetchObject();
-			$game->region = getRegion($team->region)->name;
-			return $game;
-		} catch(PDOException $e) {
-			return null;
-		}
-	}
-
 	function getCompo($id) {
 		$sql = "select * FROM compos WHERE id=:id";
 		try {

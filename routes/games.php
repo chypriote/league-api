@@ -1,36 +1,25 @@
 <?php
 
+require 'utils/games.php';
+
 $app->group('/games', function () {
 	//get games list
 	$this->get('', function($req, $res, $args) {
-		$sql = "select * FROM games";
-		try {
-			$db = getConnection();
-			$stmt = $db->query($sql);
-			$games = $stmt->fetchAll(PDO::FETCH_OBJ);
-			$db = null;
+		$games = getAllGames();
+		if ($games)
 			return $res->withStatus(200)->write(json_encode($games));
-		} catch(PDOException $e) {
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	})->setName('games');
 
 
 	//get ban with id
 	$this->get('/{id}', function($req, $res, $args){
-		$id = $args['id'];
-		$sql = "SELECT * FROM games WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$ban = $stmt->fetchObject();
-			$db = null;
-			return $res->withStatus(200)->write(json_encode($ban));
-		} catch(PDOException $e) {
+		$game = getGame($args['id']);
+		if ($game)
+			return $res->withStatus(200)->write(json_encode($game));
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	});
 
 	//post new ban

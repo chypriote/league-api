@@ -1,4 +1,21 @@
 <?php
+	function getTeamsArray() {
+		$sql = "select * FROM teams";
+		$regions = getAllRegions();
+		try {
+			$db = getConnection();
+			$stmt = $db->prepare($sql);
+			$stmt->execute();
+			$teams = $stmt->fetchAll(PDO::FETCH_OBJ);
+			foreach ($teams as $team) {
+				$team->region = $regions[$team->region]->name;
+				$ret[$team->id] = $team;
+			}
+			return $ret;
+		} catch(PDOException $e) {
+			return null;
+		}
+	}
 
 	function getAllTeams() {
 		$sql = "select * FROM teams";
@@ -44,7 +61,7 @@
 			return null;
 		}
 	}
-	
+
 	function getNbGamesTeam($id) {
 		$sql = "select COUNT(*) FROM games WHERE red=:id OR blue=:id";
 		try {
