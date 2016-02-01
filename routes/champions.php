@@ -1,55 +1,39 @@
 <?php
 
+require "utils/champions.php";
+
 $app->group('/champions', function () {
-	//get champions list
+
+	/**
+	 * @api {get} /champions Get a list of all champions
+	 * @apiName GetChampions
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Array} champions List of champions
+	 */
 	$this->get('', function($req, $res, $args) {
-		$sql = "select * FROM champions";
-		try {
-			$db = getConnection();
-			$stmt = $db->query($sql);
-			$champions = $stmt->fetchAll(PDO::FETCH_OBJ);
-			$db = null;
+		$champions = getAllChampions();
+		if ($champions)
 			return $res->withStatus(200)->write(json_encode($champions));
-		} catch(PDOException $e) {
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	})->setName('champions');
 
 	//get champion with id
 	$this->get('/{id}', function($req, $res, $args){
-		$id = $args['id'];
-		$sql = "SELECT * FROM champions WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$champion = $stmt->fetchObject();
-			$db = null;
+		$champion = getChampion($args['id']);
+		if ($champion)
 			return $res->withStatus(200)->write(json_encode($champion));
-		} catch(PDOException $e) {
+		else
 			return $res->withStatus(400)->write($e->getMessage());
-		}
 	});
 
 	//post new champion
 	$this->post('', function($req, $res, $args) {
-		$champion = $req->getParsedBody();
-		$sql = "INSERT INTO champions (name, bans, games, wins) VALUES (:name, :bans, :games, :wins)";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("name", $champion->name);
-			$stmt->bindParam("bans", $champion->bans);
-			$stmt->bindParam("games", $champion->games);
-			$stmt->bindParam("wins", $champion->wins);
-			$stmt->execute();
-			$champion->id = $db->lastInsertId();
-			$db = null;
+		$champion = addChampion($req->getParsedBody());
+		if ($champion)
 			return $res->withStatus(200)->write(json_encode($champion));
-		} catch(PDOException $e) {
-			return $res->withStatus(400)->write($e->getMessage());
-		}
+		else
+			return $res->withStatus(400)->write('{"error":"there was an error processing your request"}');
 	});
 
 	// update champion with id

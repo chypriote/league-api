@@ -35,20 +35,6 @@
 		}
 	}
 
-	function getChampion($id) {
-		$sql = "select * FROM champions WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$champion = $stmt->fetchObject();
-			return $champion;
-		} catch(PDOException $e) {
-			return null;
-		}
-	}
-
 	function getRegion($id) {
 		$sql = "select * FROM regions WHERE id=:id";
 		try {
