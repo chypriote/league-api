@@ -1,0 +1,47 @@
+{
+  "name": "league-history-site",
+  "version": "0.1.0",
+  "description": "Website LoL History",
+  "main": "index.php",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chypriote/league-history.git"
+  },
+  "keywords": [
+    "League",
+    "of",
+    "Legends",
+    "History",
+    "LoL",
+    "ChypRiotE"
+  ],
+  "author": "ChypRiotE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chypriote/league-history/issues"
+  },
+  "homepage": "https://github.com/chypriote/league-history#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "del": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-changed": "^1.3.0",
+    "gulp-cssnano": "^2.1.1",
+    "gulp-less": "^3.0.5",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-recess": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-xo": "^0.8.0",
+    "run-sequence": "^1.1.5"
+  },
+  "xo": {
+    "open": true,
+    "rules": {}
+  }
+}
