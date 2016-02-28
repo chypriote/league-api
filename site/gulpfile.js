@@ -64,7 +64,7 @@ gulp.task('reload', function () {
 
 gulp.task('serve', function () {
 	browserSync({
-		proxy: "127.0.0.1/league-api/",
+		proxy: "127.0.0.1/league-history/",
 		online: false
 	});
 });
