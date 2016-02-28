@@ -45,10 +45,10 @@ $app->group('/champions', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("name", $champion->name);
-			$stmt->bindParam("bans", $champion->bans);
-			$stmt->bindParam("games", $champion->games);
-			$stmt->bindParam("wins", $champion->wins);
+			$stmt->bindParam("name", $champion['name']);
+			$stmt->bindParam("bans", $champion['bans']);
+			$stmt->bindParam("games", $champion['games']);
+			$stmt->bindParam("wins", $champion['wins']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;

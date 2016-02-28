@@ -1,5 +1,7 @@
 <?php
 
+require 'utils/bans.php';
+
 $app->group('/bans', function () {
 	//get bans list
 	$this->get('', function($req, $res, $args) {
@@ -39,11 +41,11 @@ $app->group('/bans', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("first", $ban->first);
-			$stmt->bindParam("second", $ban->second);
-			$stmt->bindParam("third", $ban->third);
+			$stmt->bindParam("first", $ban['first']);
+			$stmt->bindParam("second", $ban['second']);
+			$stmt->bindParam("third", $ban['third']);
 			$stmt->execute();
-			$ban->id = $db->lastInsertId();
+			$ban['id'] = $db->lastInsertId();
 			$db = null;
 			return $res->withStatus(200)->write(json_encode($ban));
 		} catch(PDOException $e) {
@@ -59,9 +61,9 @@ $app->group('/bans', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("first", $ban->first);
-			$stmt->bindParam("second", $ban->second);
-			$stmt->bindParam("third", $ban->third);
+			$stmt->bindParam("first", $ban['first']);
+			$stmt->bindParam("second", $ban['second']);
+			$stmt->bindParam("third", $ban['third']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;

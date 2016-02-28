@@ -1,5 +1,7 @@
 <?php
 
+require 'utils/compos.php';
+
 $app->group('/compos', function () {
 	//get compos list
 	$this->get('', function($req, $res, $args) {
@@ -35,17 +37,17 @@ $app->group('/compos', function () {
 	//post new compo
 	$this->post('', function($req, $res, $args) {
 		$compo = $req->getParsedBody();
-		$sql = "INSERT INTO compos (top, jungle, mid, adc, support) VALUES (:top :jungle, :mid, :adc, :support)";
+		$sql = "INSERT INTO compos (top, jungle, mid, adc, support) VALUES (:top, :jungle, :mid, :adc, :support)";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("top", $compo->top);
-			$stmt->bindParam("jungle", $compo->jungle);
-			$stmt->bindParam("mid", $compo->mid);
-			$stmt->bindParam("adc", $compo->adc);
-			$stmt->bindParam("support", $compo->support);
+			$stmt->bindParam("top", $compo['top']);
+			$stmt->bindParam("jungle", $compo['jungle']);
+			$stmt->bindParam("mid", $compo['mid']);
+			$stmt->bindParam("adc", $compo['adc']);
+			$stmt->bindParam("support", $compo['support']);
 			$stmt->execute();
-			$compo->id = $db->lastInsertId();
+			$compo['id'] = $db->lastInsertId();
 			$db = null;
 			return $res->withStatus(200)->write(json_encode($compo));
 		} catch(PDOException $e) {
@@ -61,11 +63,11 @@ $app->group('/compos', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("top", $compo->top);
-			$stmt->bindParam("jungle", $compo->jungle);
-			$stmt->bindParam("mid", $compo->mid);
-			$stmt->bindParam("adc", $compo->adc);
-			$stmt->bindParam("support", $compo->support);
+			$stmt->bindParam("top", $compo['top']);
+			$stmt->bindParam("jungle", $compo['jungle']);
+			$stmt->bindParam("mid", $compo['mid']);
+			$stmt->bindParam("adc", $compo['adc']);
+			$stmt->bindParam("support", $compo['support']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;

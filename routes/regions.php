@@ -41,10 +41,10 @@ $app->group('/regions', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("name", $region->name);
-			$stmt->bindParam("country", $region->country);
+			$stmt->bindParam("name", $region['name']);
+			$stmt->bindParam("country", $region['country']);
 			$stmt->execute();
-			$region->id = $db->lastInsertId();
+			$region['id'] = $db->lastInsertId();
 			$db = null;
 			return $res->withStatus(200)->write(json_encode($region));
 		} catch(PDOException $e) {
@@ -60,8 +60,8 @@ $app->group('/regions', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("name", $region->name);
-			$stmt->bindParam("country", $region->country);
+			$stmt->bindParam("name", $region['name']);
+			$stmt->bindParam("country", $region['country']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;

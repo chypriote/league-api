@@ -24,24 +24,24 @@ $app->group('/games', function () {
 
 	//post new ban
 	$this->post('', function($req, $res, $args) {
-		$ban = $req->getParsedBody();
+		$game = $req->getParsedBody();
 		$sql = "INSERT INTO games (region, date, blue, red, blue_compo, red_compo, blue_bans, red_bans, winner) VALUES (:region, :date, :blue, :red, :blueCompo, :redCompo, :blueBans, :redBans, :winner)";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("region", $ban->region);
-			$stmt->bindParam("date", $ban->date);
-			$stmt->bindParam("blue", $ban->blue);
-			$stmt->bindParam("red", $ban->red);
-			$stmt->bindParam("blue", $ban->blue);
-			$stmt->bindParam("blueCompo", $ban->blue_compo);
-			$stmt->bindParam("redCompo", $ban->red_compo);
-			$stmt->bindParam("blueBans", $ban->blue_bans);
-			$stmt->bindParam("redBans", $ban->red_bans);
+			$stmt->bindParam("region", $game['region']);
+			$stmt->bindParam("date", $game['date']);
+			$stmt->bindParam("blue", $game['blue']);
+			$stmt->bindParam("red", $game['red']);
+			$stmt->bindParam("blueCompo", $game['blue_compo']);
+			$stmt->bindParam("redCompo", $game['red_compo']);
+			$stmt->bindParam("blueBans", $game['blue_bans']);
+			$stmt->bindParam("redBans", $game['red_bans']);
+			$stmt->bindParam("winner", $game['winner']);
 			$stmt->execute();
-			$ban->id = $db->lastInsertId();
+			$game['id'] = $db->lastInsertId();
 			$db = null;
-			return $res->withStatus(200)->write(json_encode($ban));
+			return $res->withStatus(200)->write(json_encode($game));
 		} catch(PDOException $e) {
 			return $res->withStatus(400)->write($e->getMessage());
 		}
@@ -50,24 +50,24 @@ $app->group('/games', function () {
 	// update ban with id
 	$this->put('/{id}', function($req, $res, $args) {
 		$id = $args['id'];
-		$ban = $req->getParsedBody();
+		$game = $req->getParsedBody();
 		$sql = "UPDATE games SET 'region'=:region, 'date'=:date, 'blue'=:blue, 'red'=:red, 'blue_compo'=:blueCompo, 'red_compo'=:redCompo, 'blue_bans'=:blueBans, 'red_bans'=:redBans, 'winner'=:winner WHERE id=:id";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("region", $ban->region);
-			$stmt->bindParam("date", $ban->date);
-			$stmt->bindParam("blue", $ban->blue);
-			$stmt->bindParam("red", $ban->red);
-			$stmt->bindParam("blue", $ban->blue);
-			$stmt->bindParam("blueCompo", $ban->blue_compo);
-			$stmt->bindParam("redCompo", $ban->red_compo);
-			$stmt->bindParam("blueBans", $ban->blue_bans);
-			$stmt->bindParam("redBans", $ban->red_bans);
+			$stmt->bindParam("region", $game['region']);
+			$stmt->bindParam("date", $game['date']);
+			$stmt->bindParam("blue", $game['blue']);
+			$stmt->bindParam("red", $game['red']);
+			$stmt->bindParam("blue", $game['blue']);
+			$stmt->bindParam("blueCompo", $game['blue_compo']);
+			$stmt->bindParam("redCompo", $game['red_compo']);
+			$stmt->bindParam("blueBans", $game['blue_bans']);
+			$stmt->bindParam("redBans", $game['red_bans']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;
-			return $res->withStatus(200)->write(json_encode($ban));
+			return $res->withStatus(200)->write(json_encode($game));
 		} catch(PDOException $e) {
 			return $res->withStatus(400)->write($e->getMessage());
 		}

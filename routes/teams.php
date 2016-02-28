@@ -23,17 +23,15 @@ $app->group('/teams', function () {
 	//post new team
 	$this->post('', function($req, $res, $args) {
 		$team = $req->getParsedBody();
-		$sql = "INSERT INTO teams (region, name, logo, games, wins) VALUES (:region, :name, :logo, :games, :wins)";
+		$sql = "INSERT INTO teams (region, name, logo, games, wins) VALUES (:region, :name, :logo, 0, 0)";
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("region", $team->region);
-			$stmt->bindParam("name", $team->name);
-			$stmt->bindParam("logo", $team->logo);
-			$stmt->bindParam("games", $team->games);
-			$stmt->bindParam("wins", $team->wins);
+			$stmt->bindParam("region", $team['region']);
+			$stmt->bindParam("name", $team['name']);
+			$stmt->bindParam("logo", $team['logo']);
 			$stmt->execute();
-			$team->id = $db->lastInsertId();
+			$team['id'] = $db->lastInsertId();
 			$db = null;
 			return $res->withStatus(200)->write(json_encode($team));
 		} catch(PDOException $e) {
@@ -49,11 +47,11 @@ $app->group('/teams', function () {
 		try {
 			$db = getConnection();
 			$stmt = $db->prepare($sql);
-			$stmt->bindParam("region", $team->region);
-			$stmt->bindParam("name", $team->name);
-			$stmt->bindParam("logo", $team->logo);
-			$stmt->bindParam("games", $team->games);
-			$stmt->bindParam("wins", $team->wins);
+			$stmt->bindParam("region", $team['region']);
+			$stmt->bindParam("name", $team['name']);
+			$stmt->bindParam("logo", $team['logo']);
+			$stmt->bindParam("games", $team['games']);
+			$stmt->bindParam("wins", $team['wins']);
 			$stmt->bindParam("id", $id);
 			$stmt->execute();
 			$db = null;

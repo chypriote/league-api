@@ -7,34 +7,6 @@
 		return $dbh;
 	}
 
-	function getCompo($id) {
-		$sql = "select * FROM compos WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$compo = $stmt->fetchObject();
-			return $compo;
-		} catch(PDOException $e) {
-			return null;
-		}
-	}
-
-	function getBans($id) {
-		$sql = "select * FROM bans WHERE id=:id";
-		try {
-			$db = getConnection();
-			$stmt = $db->prepare($sql);
-			$stmt->bindParam("id", $id);
-			$stmt->execute();
-			$ban = $stmt->fetchObject();
-			return $ban;
-		} catch(PDOException $e) {
-			return null;
-		}
-	}
-
 	function getRegion($id) {
 		$sql = "select * FROM regions WHERE id=:id";
 		try {
