@@ -11,27 +11,44 @@ $app->group('/champions', function () {
 	 * @apiSuccess {Array} champions List of champions
 	 */
 	$this->get('', function($req, $res, $args) {
-		$champions = getAllChampions();
+		$champions = \Champion::all();
+
 		if ($champions)
-			return $res->withStatus(200)->write(json_encode($champions));
+			return $res->withStatus(200)->write($champions->toJson());
 		else
 			return $res->withStatus(400)->write($e->getMessage());
 	})->setName('champions');
 
-	//get champion with id
+	/**
+	 * @api {get} /champions/{id} Get the champion with the provided id
+	 * @apiName GetChampion
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Object} champion Champion infos
+	 */
 	$this->get('/{id}', function($req, $res, $args){
-		$champion = getChampion($args['id']);
+		$champion = \Champion::find($args['id']);
+
 		if ($champion)
-			return $res->withStatus(200)->write(json_encode($champion));
+			return $res->withStatus(200)->write($champion->toJson());
 		else
 			return $res->withStatus(400)->write($e->getMessage());
 	});
 
-	//post new champion
+	/**
+	 * @api {post} /champions Create a new champion
+	 * @apiName PostChampion
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Object} champion Champion created
+	 */
 	$this->post('', function($req, $res, $args) {
-		$champion = addChampion($req->getParsedBody());
+		$champion = new \Champion;
+		$body = $req->getParsedBody();
+		$champion->name = $body['name'];
+		$champion->slug = $body['slug'];
+		$champion->save();
+
 		if ($champion)
-			return $res->withStatus(200)->write(json_encode($champion));
+			return $res->withStatus(200)->write($champion->toJson());
 		else
 			return $res->withStatus(400)->write('{"error":"there was an error processing your request"}');
 	});
