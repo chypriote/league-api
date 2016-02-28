@@ -8,10 +8,16 @@ if (PHP_SAPI == 'cli-server') {
 
 require 'vendor/autoload.php';
 session_start();
-
-$app = new \Slim\App();
+$configuration = [
+    'settings' => [
+        'displayErrorDetails' => true,
+    ],
+];
+$c = new \Slim\Container($configuration);
+$app = new \Slim\App($c);
 
 require 'config.php';
+require 'dependencies.php';
 
 function getConnection() {
 	global $server, $database, $user, $password;

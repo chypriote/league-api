@@ -1,6 +1,12 @@
 {
 	"require": {
-  	"slim/slim": "3.*",
-		"slim/php-view": "^2.0"
+		"slim/slim": "3.*",
+		"slim/php-view": "^2.0",
+		"illuminate/database": "^5.2",
+		"illuminate/pagination": "^5.2",
+		"illuminate/events": "^5.2"
+	},
+	"autoload": {
+		"classmap": ["models"]
 	}
 }
