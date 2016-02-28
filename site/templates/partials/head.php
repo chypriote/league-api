@@ -8,5 +8,5 @@
 	<?php else: ?>
 		<title>LoL History</title>
 	<?php endif; ?>
-	<link rel="stylesheet" href="public/main.css">
+	<link rel="stylesheet" href="public/css/main.min.css">
 </head>

@@ -10,3 +10,7 @@
 
 		return $this->renderer->render($res, 'index.phtml', $args);
 	});
+
+	$app->get('public/{file}', function($req, $res, $args) {
+		return $file;
+	});
