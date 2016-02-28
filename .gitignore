@@ -2,3 +2,4 @@
 .phpintel
 config.php
 vendor
+node_modules

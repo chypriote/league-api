@@ -1,0 +1,30 @@
+{
+  "name": "league-history-api",
+  "version": "0.1.0",
+  "description": "API for the League History website",
+  "main": "index.php",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chypriote/league-history.git"
+  },
+  "keywords": [
+    "League",
+    "of",
+    "Legends",
+    "History",
+    "LoL",
+    "ChypRiotE"
+  ],
+  "author": "ChypRiotE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chypriote/league-history/issues"
+  },
+  "homepage": "https://github.com/chypriote/league-history#readme"
+}
