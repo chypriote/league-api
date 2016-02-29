@@ -1,7 +1,16 @@
 {
   "name": "league-history-api",
   "version": "0.1.0",
+  "homepage": "https://github.com/chypriote/league-history#readme",
   "description": "API for the League History website",
+  "keywords": [
+    "League of Legends",
+    "History",
+    "LoL",
+    "ChypRiotE"
+  ],
+  "author": "ChypRiotE",
+  "license": "MIT",
   "main": "index.php",
   "directories": {
     "doc": "doc"
@@ -13,18 +22,14 @@
     "type": "git",
     "url": "git+https://github.com/chypriote/league-history.git"
   },
-  "keywords": [
-    "League",
-    "of",
-    "Legends",
-    "History",
-    "LoL",
-    "ChypRiotE"
-  ],
-  "author": "ChypRiotE",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/chypriote/league-history/issues"
   },
-  "homepage": "https://github.com/chypriote/league-history#readme"
+  "apidoc": {
+    "url": "https://league.chypriote.me/api/doc"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "gulp": "^3.9.1"
+  }
 }

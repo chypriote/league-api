@@ -9,6 +9,22 @@ $app->group('/champions', function () {
 	 * @apiName GetChampions
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Array} champions List of champions
+	 * @apiSuccessExample Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *     [{
+	 *       "name": "Champion",
+	 *       "slug": "champ",
+	 *       "games": 4,
+	 *       "wins": 2,
+	 *       "bans": 1
+	 *     },
+	 *	   {
+	 *       "name": "Champion",
+	 *       "slug": "champ",
+	 *       "games": 6,
+	 *       "wins": 3,
+	 *       "bans": 2
+	 *     }]
 	 */
 	$this->get('', function($req, $res, $args) {
 		$champions = \Champion::all();
@@ -20,7 +36,7 @@ $app->group('/champions', function () {
 	})->setName('champions');
 
 	/**
-	 * @api {get} /champions/{id} Get the champion with the provided id
+	 * @api {get} /champions/:id Get the champion with the provided id
 	 * @apiName GetChampion
 	 * @apiVersion 1.0.0
 	 * @apiSuccess {Object} champion Champion infos
@@ -53,7 +69,12 @@ $app->group('/champions', function () {
 			return $res->withStatus(400)->write('{"error":"there was an error processing your request"}');
 	});
 
-	// update champion with id
+	/**
+	 * @api {put} /champions/:id Updates the champion with ID
+	 * @apiName UpdateChampion
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Object} champion Champion updated
+	 */
 	$this->put('/{id}', function($req, $res, $args) {
 		$id = $args['id'];
 		$champion = $req->getParsedBody();
@@ -75,7 +96,11 @@ $app->group('/champions', function () {
 		}
 	});
 
-	//delete champion with id
+	/**
+	 * @api {delete} /champions/:id Delete the champion with ID
+	 * @apiName DeleteChampion
+	 * @apiVersion 1.0.0
+	 */
 	$this->delete('/{id}', function($req, $res, $args) {
 		$id = $args['id'];
 		$sql = "DELETE FROM champions WHERE id=:id";
@@ -91,7 +116,12 @@ $app->group('/champions', function () {
 		}
 	});
 
-	//find by name
+	/**
+	 * @api {get} /champions/search/:query Search for a champion with query
+	 * @apiName QueryChampion
+	 * @apiVersion 1.0.0
+	 * @apiSuccess {Object} champion Champion found
+	 */
 	$this->get('/search/{query}', function($req, $res, $args) {
 		$query = $args['query'];
 		$sql = "SELECT * FROM champions WHERE LOWER(name) LIKE :query ORDER BY name";
