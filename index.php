@@ -15,6 +15,13 @@ $configuration = [
 ];
 $c = new \Slim\Container($configuration);
 $app = new \Slim\App($c);
+$container = $app->getContainer();
+$container['renderer'] = function($c) {
+	return new Slim\Views\PhpRenderer('site/templates/');
+};
+$container['docrender'] = function($c) {
+	return new Slim\Views\PhpRenderer('api/doc/');
+};
 
 require 'config.php';
 require 'dependencies.php';
@@ -38,6 +45,9 @@ $app->group('/api', function() use ($app) {
 	require 'api/routes/regions.php';
 	require 'api/routes/bans.php';
 	require 'api/routes/games.php';
+	$app->get('/doc/', function ($req, $res, $args) {
+		return $this->docrender->render($res, 'index.html', $args);
+	});
 });
 
 $app->run();
